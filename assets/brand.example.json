@@ -1,0 +1,31 @@
+{
+  "_instrucciones": "Copia este archivo como assets/brand.json y cambia los valores por los de tu marca. Los campos vacíos se ignoran y se usan los valores por defecto de scripts/common.py.",
+
+  "name": "Tu Nombre",
+  "role": "Creador de contenido · Tu nicho",
+  "handle": "@tuusuario",
+  "personal_tag": "Tu nicho en 2-3 palabras",
+  "personal_cta": "Sígueme para más",
+
+  "company": "",
+  "company_keywords": [],
+  "cta": "",
+  "url": "",
+
+  "font": "Space Grotesk",
+  "mono_font": "JetBrains Mono",
+
+  "primary_color": "#2563EB",
+  "accent_color": "#2563EB",
+  "accent2_color": "#60A5FA",
+  "caption_active_color": "#4F8BFF",
+  "on_accent_color": "#FFFFFF",
+  "text_color": "#FFFFFF",
+  "dark_color": "#000000",
+  "surface_color": "#131313",
+  "deep_color": "#0B1B3F",
+  "warm_color": "#F97316",
+
+  "logo": null,
+  "vocabulary": "Tu Nombre, TuMarca, términos de tu nicho que Whisper suele escribir mal"
+}
