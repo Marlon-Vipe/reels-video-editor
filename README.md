@@ -1,64 +1,55 @@
-# 🎬 Reels Video Editor — Skill para Claude
+# reels-video-editor
 
-Skill para que Claude edite videos hablados a cámara (Reels, TikTok, Shorts y YouTube) con acabado premium y **tu propia marca**.
+Una skill para Claude que edita videos hablados a cámara: Reels, TikToks, Shorts y también videos de YouTube.
 
-Le das un video crudo y te devuelve un `.mp4` listo para publicar:
+La armé para mis propios Reels porque editar cada video me tomaba horas: cortar silencios, poner subtítulos a mano, buscar efectos... Después de usarla un tiempo la limpié para que cualquiera la pueda adaptar a su marca, y la dejo aquí.
 
-- ✂️ **Cortes inteligentes**: quita silencios, muletillas y tomas repetidas sin cambiar el sentido, con zoom alterno en cada corte.
-- 💬 **Subtítulos palabra por palabra** sincronizados con la voz real (faster-whisper), con la palabra activa resaltada.
-- ⚡ **Hook cinético**: cada placa entra justo cuando se dice su palabra.
-- 🧩 **Motion graphics**: más de 20 plantillas (alertas, comparativas, flujos, filas de iconos, mockup de teléfono, terminal, CTA con flecha…) con transiciones variadas.
-- 🔊 **Sonido**: impactos, whooshes, pops, risers y música original generada (sin copyright), con ducking.
-- 🎚️ **Exportación profesional**: H.264, -14 LUFS en dos pasadas, pico ≤ -1.5 dBTP.
-- ✅ **Control de calidad** automático con hojas de contacto antes de entregar.
+## Qué hace
 
-## Instalación
+Le pasas el video crudo y te devuelve un mp4 listo para subir. En el camino:
 
-1. Descarga este repositorio (o el `.zip`).
-2. En Claude: **Configuración → Capacidades → Skills → Subir skill** y sube la carpeta comprimida.
-   En Claude Code: copia la carpeta a `~/.claude/skills/reels-video-editor/`.
+- Quita los silencios, las muletillas y las tomas repetidas, y mete un zoom leve en cada corte para que no se noten los saltos.
+- Transcribe con faster-whisper y pone subtítulos palabra por palabra, con la palabra que estás diciendo resaltada.
+- Arma un gancho al inicio que aparece justo cuando dices cada palabra, no antes.
+- Agrega tarjetas animadas cuando mencionas algo que se puede mostrar: una comparación, una lista, un proceso, una cifra. Hay unas veinte plantillas y no repite diseño en el mismo video.
+- Pone efectos de sonido, una música de fondo generada (sin problemas de copyright) y deja el audio a -14 LUFS, que es lo que esperan las plataformas.
+- Antes de entregar revisa fotogramas sueltos para comprobar que nada tape la cara y que los subtítulos vayan sincronizados.
 
-Requisitos del entorno: `ffmpeg` (con libass y libx264), Python 3.9+, `numpy`, `scipy`, `pillow`, `faster-whisper`. Ejecuta `bash scripts/check_env.sh` para comprobarlo.
+No es magia: a veces Whisper escribe mal un nombre o un corte queda raro, así que Claude te dice qué frases corrigió para que las confirmes.
 
-## Adáptala a tu marca (2 minutos)
+## Cómo instalarla
+
+En claude.ai: comprime la carpeta y súbela en Configuración → Capacidades → Skills.
+
+En Claude Code: copia la carpeta a `~/.claude/skills/reels-video-editor/`.
+
+Necesitas `ffmpeg` (con libass y libx264), Python 3.9 o superior y `pip install faster-whisper numpy scipy pillow`. Puedes correr `bash scripts/check_env.sh` para ver qué te falta.
+
+## Ponerle tu marca
 
 ```bash
 cp assets/brand.example.json assets/brand.json
 ```
 
-Edita `assets/brand.json`:
+Abre `brand.json` y cambia lo básico: tu nombre, a qué te dedicas, tu color principal y la frase del cierre ("Sígueme para más", o lo que uses). Si tienes empresa y quieres que aparezca cuando la mencionas en el video, llena también `company`, `company_keywords` y `url`. En `vocabulary` pon los nombres que la transcripción suele escribir mal (el tuyo, tu marca, términos de tu nicho).
 
-| Campo | Ejemplo |
-|---|---|
-| `name` / `role` | `"Ana Pérez"` / `"Coach de fitness"` |
-| `personal_tag` / `personal_cta` | `"Fitness y nutrición"` / `"Sígueme para más"` |
-| `primary_color` | El color principal de tu marca, p. ej. `"#E11D48"` |
-| `accent2_color` / `caption_active_color` | Versiones más claras del primario (para que se lean sobre video) |
-| `company` / `company_keywords` / `url` | Opcional: cierre de empresa cuando el video la menciona |
-| `vocabulary` | Nombres propios que la transcripción suele escribir mal |
+Si no creas el archivo, Claude te pregunta esos datos la primera vez. Hay más detalle sobre colores y tipografías en [references/brand-guide.md](references/brand-guide.md).
 
-Si no creas el archivo, Claude te preguntará estos datos la primera vez. Guía completa en [`references/brand-guide.md`](references/brand-guide.md).
+## Usarla
 
-## Uso
+Sube el video a Claude y pídele algo normal, por ejemplo: "edítame este Reel, quítale los silencios y ponle subtítulos". Tarda unos minutos porque renderiza en CPU.
 
-Sube tu video a Claude y pide algo como:
+## Qué hay en la carpeta
 
-> "Edítame este Reel: quita los silencios, ponle subtítulos y que se vea premium."
-
-## Estructura
-
-```
-reels-video-editor/
-├── SKILL.md                 # instrucciones que lee Claude
-├── assets/
-│   ├── brand.example.json   # plantilla de marca
-│   └── fonts/               # Space Grotesk, JetBrains Mono, Inter, Montserrat (SIL OFL)
-├── references/              # reglas editoriales, formatos, catálogo de animaciones, guía de marca
-└── scripts/                 # transcripción, cortes, subtítulos, tarjetas, audio y exportación
-```
+- `SKILL.md`: las instrucciones que lee Claude.
+- `scripts/`: transcripción, cortes, subtítulos, tarjetas, audio y exportación.
+- `references/`: reglas de edición, formatos, catálogo de animaciones y la guía de marca.
+- `assets/`: la plantilla de marca y las fuentes.
 
 ## Licencia
 
-Código bajo licencia MIT (ver `LICENSE`). Las fuentes incluidas se distribuyen bajo SIL Open Font License 1.1 (ver `assets/fonts/OFL-*.txt`).
+El código es MIT. Las fuentes (Space Grotesk, JetBrains Mono, Inter y Montserrat) tienen licencia SIL Open Font License; los textos de licencia están en `assets/fonts/`.
 
-Creada por [Marlon Villalona](https://github.com/). Contribuciones bienvenidas.
+Si la mejoras o encuentras un bug, abre un issue o un PR.
+
+— Marlon Villalona
